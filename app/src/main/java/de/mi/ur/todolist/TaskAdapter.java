@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,12 +60,19 @@ public class TaskAdapter extends BaseAdapter {
 
         TextView tvDescription = view.findViewById(R.id.tv_description);
         TextView tvDeadLine = view.findViewById(R.id.tv_deadline);
+        LinearLayout llContainerDeadLine = view.findViewById(R.id.ll_container_deadline);
 
         tvDescription.setText(taskItem.getDescription());
-        tvDeadLine.setText(dateFormat.format(taskItem.getDeadLine()));
+        if (taskItem.getDeadLine() != null) {
+            llContainerDeadLine.setVisibility(View.VISIBLE);
+            tvDeadLine.setText(dateFormat.format(taskItem.getDeadLine()));
+        } else {
+            llContainerDeadLine.setVisibility(View.GONE);
+        }
 
         if (taskItem.isCompleted()) {
             tvDescription.setPaintFlags(tvDeadLine.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
+            view.setEnabled(false);
+        } else view.setEnabled(true);
     }
 }

@@ -2,4 +2,6 @@
     <string name="app_name">ToDoList</string>
     <string name="add">Hinzufügen</string>
     <string name="task">Aufgabe</string>
+    <string name="deadline_preview_empty">keine Deadline ausgewählt</string>
+    <string name="empty_input_warning">Gib zuerst eine Aufgabe ein</string>
 </resources>
