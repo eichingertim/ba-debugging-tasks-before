@@ -22,6 +22,13 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Projekt Features:
+ *  - Über ein Eingabefeld können Aufgaben beschrieben werden
+ *  - Per Button kann eine solche Aufgabe zu einer Liste hinzugefügt werden
+ *  - Optional kann auch eine Deadline per DatePicker festgelegt werden
+ *  - Durch Langes klicken, kann eine Aufgabe abgehakt/durchgestrichen werden.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private TaskAdapter adapter;
@@ -62,14 +69,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        lvTasks.setOnItemLongClickListener((parent, view, position, id) ->
-                onTaskLongClicked(position));
-
-        btnSelectDeadline.setOnClickListener(v -> {
-            onSelectDeadlineClick();
+        lvTasks.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                return MainActivity.this.onTaskLongClicked(position);
+            }
         });
 
-        btnAddTask.setOnClickListener(v -> onAddTaskClick());
+        btnSelectDeadline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.this.onSelectDeadlineClick();
+            }
+        });
+
+        btnAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.this.onAddTaskClick();
+            }
+        });
     }
 
     private void onSelectDeadlineClick() {
