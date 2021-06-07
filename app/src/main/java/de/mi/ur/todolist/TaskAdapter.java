@@ -45,7 +45,7 @@ public class TaskAdapter extends BaseAdapter {
 
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            view = inflater.inflate(R.layout.layout_task, parent, false);
+            view = inflater.inflate(R.layout.activity_main, parent, false);
         }
 
         Task taskItem = getItem(position);
