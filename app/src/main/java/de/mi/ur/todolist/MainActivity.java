@@ -45,22 +45,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupUI();
         setupListView();
         setupListeners();
 
 
-    }
-
-    public void setupUI() {
-        setContentView(R.layout.activity_main);
-
-        lvTasks = findViewById(R.id.lv_tasks);
-
-        etTaskInput = findViewById(R.id.et_task_input);
-        btnSelectDeadline = findViewById(R.id.btn_select_deadline);
-        btnAddTask = findViewById(R.id.btn_add);
-        tvSelectedDeadline = findViewById(R.id.tv_selected_date);
     }
 
     private void setupListView() {
@@ -89,6 +77,17 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.onAddTaskClick();
             }
         });
+    }
+
+    public void setupUI() {
+        setContentView(R.layout.activity_main);
+
+        lvTasks = findViewById(R.id.lv_tasks);
+
+        etTaskInput = findViewById(R.id.et_task_input);
+        btnSelectDeadline = findViewById(R.id.btn_select_deadline);
+        btnAddTask = findViewById(R.id.btn_add);
+        tvSelectedDeadline = findViewById(R.id.tv_selected_date);
     }
 
     private void onSelectDeadlineClick() {
