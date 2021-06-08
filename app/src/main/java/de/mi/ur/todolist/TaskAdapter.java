@@ -31,7 +31,7 @@ public class TaskAdapter extends BaseAdapter {
 
     @Override
     public Task getItem(int position) {
-        return taskItems.get(position);
+        return taskItems.get(0);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class TaskAdapter extends BaseAdapter {
 
         Task taskItem = getItem(position);
 
-        fillData(taskItem, parent);
+        fillData(taskItem, view);
 
         return view;
     }
@@ -58,7 +58,7 @@ public class TaskAdapter extends BaseAdapter {
     private void fillData(Task taskItem, View view) {
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
 
-        TextView tvDescription = view.findViewById(R.id.startVertical);
+        TextView tvDescription = view.findViewById(R.id.tv_description);
         TextView tvDeadLine = view.findViewById(R.id.tv_deadline);
         LinearLayout llContainerDeadLine = view.findViewById(R.id.ll_container_deadline);
 
