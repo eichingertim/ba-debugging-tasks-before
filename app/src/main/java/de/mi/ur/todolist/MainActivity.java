@@ -48,8 +48,13 @@ public class MainActivity extends AppCompatActivity implements UICommandReceiver
         setupListeners();
     }
 
+    @Override
+    public void onUIResetRequested() {
+        resetUI();
+    }
+
     private void setupListView() {
-        adapter = new TaskAdapter();
+        adapter = new TaskAdapter(R.layout.layout_task);
         lvTasks.setAdapter(adapter);
     }
 
@@ -76,6 +81,17 @@ public class MainActivity extends AppCompatActivity implements UICommandReceiver
         });
     }
 
+    private void onSelectDeadlineClick() {
+        Calendar calendar = Calendar.getInstance();
+        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            setDeadLine(calendar);
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
     private void setupUI() {
         setContentView(R.layout.activity_main);
         lvTasks = findViewById(R.id.lv_tasks);
@@ -83,19 +99,6 @@ public class MainActivity extends AppCompatActivity implements UICommandReceiver
         btnSelectDeadline = findViewById(R.id.btn_select_deadline);
         btnAddTask = findViewById(R.id.btn_add);
         tvSelectedDeadline = findViewById(R.id.tv_selected_date);
-    }
-
-    private void onSelectDeadlineClick() {
-        Calendar calendar = Calendar.getInstance();
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, month);
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            setDeadLine(calendar);
-
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void resetInput() {
@@ -134,11 +137,6 @@ public class MainActivity extends AppCompatActivity implements UICommandReceiver
         longClickedTask.setCompleted(true);
         adapter.notifyDataSetChanged();
         return true;
-    }
-
-    @Override
-    public void onUIResetRequested() {
-        resetUI();
     }
 
     public void resetUI() {
