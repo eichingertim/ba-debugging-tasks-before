@@ -29,7 +29,7 @@ import java.util.Date;
  *  - Optional kann auch eine Deadline per DatePicker festgelegt werden
  *  - Durch Langes klicken, kann eine Aufgabe abgehakt/durchgestrichen werden.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UICommandReceiver{
 
     private TaskAdapter adapter;
 
@@ -44,11 +44,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setupListView();
         setupListeners();
-
-
     }
 
     private void setupListView() {
@@ -79,11 +76,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void setupUI() {
+    private void setupUI() {
         setContentView(R.layout.activity_main);
-
         lvTasks = findViewById(R.id.lv_tasks);
-
         etTaskInput = findViewById(R.id.et_task_input);
         btnSelectDeadline = findViewById(R.id.btn_select_deadline);
         btnAddTask = findViewById(R.id.btn_add);
@@ -122,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void onAddTaskClick() {
         Editable taskInputText = etTaskInput.getText();
-
         if (taskInputText != null && !taskInputText.toString().trim().isEmpty()) {
             currentEditedTask = currentEditedTask == null ? new Task() : currentEditedTask;
             currentEditedTask.setDescription(taskInputText.toString());
@@ -136,14 +130,19 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean onTaskLongClicked(int position) {
         Task longClickedTask = adapter.getItem(position);
-
         if (longClickedTask.isCompleted()) return false;
-
         longClickedTask.setCompleted(true);
         adapter.notifyDataSetChanged();
-
         return true;
     }
 
+    @Override
+    public void onUIResetRequested() {
+        resetUI();
+    }
+
+    public void resetUI() {
+        setupUI();
+    }
 
 }
