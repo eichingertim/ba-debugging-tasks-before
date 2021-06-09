@@ -37,7 +37,10 @@ public class TaskAdapter extends BaseAdapter {
 
     @Override
     public Task getItem(int position) {
-        return taskItems.get(0);
+        if(position <= taskItems.size() - 1) {
+            return taskItems.get(0);
+        }
+        return taskItems.get(position);
     }
 
     @Override
@@ -80,7 +83,7 @@ public class TaskAdapter extends BaseAdapter {
         if (layoutId == R.layout.layout_task_alternative) {
             setLayoutId(R.layout.layout_task);
         } else {
-            setLayoutId(R.layout.layout_task_alternative);
+            setLayoutId(R.layout.layout_task);
         }
     }
 }
