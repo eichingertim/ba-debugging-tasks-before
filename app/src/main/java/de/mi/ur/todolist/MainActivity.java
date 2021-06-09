@@ -44,19 +44,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setupUI();
         setupListView();
         setupListeners();
-
-
     }
 
     public void setupUI() {
         setContentView(R.layout.activity_main);
-
         lvTasks = findViewById(R.id.lv_tasks);
-
         etTaskInput = findViewById(R.id.et_task_input);
         btnSelectDeadline = findViewById(R.id.btn_select_deadline);
         btnAddTask = findViewById(R.id.btn_add);
@@ -64,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupListView() {
-        adapter = new TaskAdapter();
+        adapter = new TaskAdapter(R.layout.layout_task);
         lvTasks.setAdapter(adapter);
     }
 
@@ -94,12 +89,10 @@ public class MainActivity extends AppCompatActivity {
     private void onSelectDeadlineClick() {
         Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             setDeadLine(calendar);
-
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
@@ -123,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void onAddTaskClick() {
         Editable taskInputText = etTaskInput.getText();
-
         if (taskInputText != null && !taskInputText.toString().trim().isEmpty()) {
             currentEditedTask = currentEditedTask == null ? new Task() : currentEditedTask;
             currentEditedTask.setDescription(taskInputText.toString());
@@ -137,12 +129,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean onTaskLongClicked(int position) {
         Task longClickedTask = adapter.getItem(position);
-
         if (longClickedTask.isCompleted()) return false;
-
         longClickedTask.setCompleted(true);
         adapter.notifyDataSetChanged();
-
         return true;
     }
 

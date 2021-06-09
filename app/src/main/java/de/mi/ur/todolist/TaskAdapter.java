@@ -20,8 +20,14 @@ public class TaskAdapter extends BaseAdapter {
 
     private final List<Task> taskItems = new ArrayList<>();
 
-    public void addTask(@NonNull Task task) {
-        taskItems.add(task);
+    private int layoutId;
+
+    public TaskAdapter(int layoutId) {
+        setLayoutId(layoutId);
+    }
+
+    public void setLayoutId(int layoutId) {
+        this.layoutId = layoutId;
     }
 
     @Override
@@ -42,26 +48,20 @@ public class TaskAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            view = inflater.inflate(R.layout.layout_task, parent, false);
+            view = inflater.inflate(layoutId, parent, false);
         }
-
         Task taskItem = getItem(position);
-
         fillData(taskItem, view);
-
         return view;
     }
 
     private void fillData(Task taskItem, View view) {
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-
         TextView tvDescription = view.findViewById(R.id.tv_description);
         TextView tvDeadLine = view.findViewById(R.id.tv_deadline);
         LinearLayout llContainerDeadLine = view.findViewById(R.id.ll_container_deadline);
-
         tvDescription.setText(taskItem.getDescription());
         if (taskItem.getDeadLine() != null) {
             llContainerDeadLine.setVisibility(View.VISIBLE);
@@ -69,10 +69,18 @@ public class TaskAdapter extends BaseAdapter {
         } else {
             llContainerDeadLine.setVisibility(View.GONE);
         }
-
         if (taskItem.isCompleted()) {
             tvDescription.setPaintFlags(tvDeadLine.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             view.setEnabled(false);
         } else view.setEnabled(true);
+    }
+
+    public void addTask(@NonNull Task task) {
+        taskItems.add(task);
+        if (layoutId == R.layout.layout_task_alternative) {
+            setLayoutId(R.layout.layout_task);
+        } else {
+            setLayoutId(R.layout.layout_task_alternative);
+        }
     }
 }
