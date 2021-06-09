@@ -47,6 +47,11 @@ public class TaskAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if (position % 2 != 0) {
+            setLayoutId(R.layout.layout_task);
+        } else {
+            setLayoutId(R.layout.layout_task_alternative);
+        }
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -77,10 +82,5 @@ public class TaskAdapter extends BaseAdapter {
 
     public void addTask(@NonNull Task task) {
         taskItems.add(task);
-        if (layoutId == R.layout.layout_task_alternative) {
-            setLayoutId(R.layout.layout_task);
-        } else {
-            setLayoutId(R.layout.layout_task_alternative);
-        }
     }
 }
